@@ -1,4 +1,5 @@
-import { getAllPeoplesApi } from "@/services/people.service";
+import { getFilmsApi } from "@/services/films.service";
+import { getPeoplesApi } from "@/services/people.service";
 
 export const state = {
   peopleList: [],
@@ -7,6 +8,8 @@ export const state = {
   maxPage: 1,
   itemsPerPage: 10,
   filteredName: "",
+  peopleSelected: null,
+  selectedPeopleMovies: [],
 };
 export const mutations = {
   SET_PEOPLE_LIST(state, peopleList) {
@@ -27,12 +30,21 @@ export const mutations = {
   SET_FILTERED_NAME(state, filteredName) {
     state.filteredName = filteredName;
   },
+  SET_PEOPLE_SELECTED(state, peopleSelected) {
+    state.peopleSelected = peopleSelected;
+  },
+  ADD_SELECTED_PEOPLE_MOVIES(state, selectedPeopleMovies) {
+    state.selectedPeopleMovies.push(selectedPeopleMovies);
+  },
+  SET_SELECTED_PEOPLE_MOVIES(state, selectedPeopleMovies) {
+    state.selectedPeopleMovies = selectedPeopleMovies;
+  },
 };
 export const actions = {
   async fetchPeopleListByPage({ commit, dispatch }, page = 1) {
     try {
       dispatch("loading/showLoading", true, { root: true });
-      const response = await getAllPeoplesApi(page);
+      const response = await getPeoplesApi(page);
       dispatch("loading/showLoading", false, { root: true });
       commit("SET_PEOPLE_LIST", response.results);
       state.maxPage < page ? commit("SET_MAX_PAGE", page) : null;
@@ -46,8 +58,7 @@ export const actions = {
   async fetchPeopleListByName({ commit, dispatch }, name) {
     try {
       dispatch("loading/showLoading", true, { root: true });
-      console.log(name);
-      const response = await getAllPeoplesApi(1, name);
+      const response = await getPeoplesApi(1, name);
       dispatch("loading/showLoading", false, { root: true });
       response.results.length
         ? response.results.forEach((result) =>
@@ -60,6 +71,46 @@ export const actions = {
       console.log(err);
       dispatch("loading/showLoading", false);
     }
+  },
+  async fetchPeopleById({ commit, dispatch }, id) {
+    try {
+      dispatch("loading/showLoading", true, { root: true });
+      const response = await getPeoplesApi(1, "", id);
+      dispatch("loading/showLoading", false, { root: true });
+      commit("SET_PEOPLE_SELECTED", response);
+    } catch (err) {
+      console.log(err);
+      dispatch("loading/showLoading", false);
+    }
+  },
+  async fetchFilmsById({ commit, dispatch }, id) {
+    try {
+      dispatch("loading/showLoading", true, { root: true });
+      const response = await getFilmsApi("", id);
+      dispatch("loading/showLoading", false, { root: true });
+      commit("ADD_SELECTED_PEOPLE_MOVIES", response);
+    } catch (err) {
+      console.log(err);
+      dispatch("loading/showLoading", false);
+    }
+  },
+  fetchFilmsByPeopleSelected({ dispatch }) {
+    try {
+      state.peopleSelected
+        ? Promise.all(
+            state.peopleSelected.films.map((film) => {
+              dispatch("fetchFilmsById", film.split("/")[5]);
+            })
+          )
+        : null;
+    } catch (err) {
+      console.log(err);
+      dispatch("loading/showLoading", false);
+    }
+  },
+  clearInfoPeopleSelected({ commit }) {
+    commit("SET_PEOPLE_SELECTED", null);
+    commit("SET_SELECTED_PEOPLE_MOVIES", []);
   },
 };
 export const getters = {
