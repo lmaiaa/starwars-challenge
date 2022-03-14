@@ -1,6 +1,5 @@
 <template lang="pug">
     div.input
-        span.input__icon(v-if="icon" :class="`mdi mdi-${icon}`")
         input.input__field(:placeholder="placeholder" type="text" @input="$emit('input', $event.target.value)" )
 </template>
 <script>
@@ -22,12 +21,6 @@ export default {
 .input
     display: flex
     align-items: baseline
-    &__icon
-        position: relative
-        left: 35px
-        z-index: 1
-        color: var(--color-secondary)
-        font-size: 1.8rem;
     &__field
         border-radius: 10px;
         min-height: 30px;
