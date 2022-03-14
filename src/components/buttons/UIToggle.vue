@@ -41,14 +41,14 @@ export default {
     font-size: calc(var(--element-size) * 0.5);
     height: calc(var(--element-size) * 0.35);
     align-items: center;
-    background: var(--text-secondary-color);
+    background: var(--text-primary-color);
     cursor: pointer;
     position: relative;
     transition: background 0.5s ease;
     z-index: 1;
 .switch-toggle
     position: absolute;
-    background-color: var(--background-color-primary);
+    background-color: var(--background-color-secondary);
     border-radius: 50%;
     top: calc(var(--element-size) * 0.15);
     left: calc(var(--element-size) * 0.2);

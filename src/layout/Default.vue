@@ -70,7 +70,6 @@ export default {
     background: var(--color-primary)
     &__title
         font-size: 1.6rem
-        color: var(--text-secondary-color)
         font-weight: bold
         margin: 0
         padding: 0

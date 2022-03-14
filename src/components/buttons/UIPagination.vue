@@ -27,8 +27,6 @@ export default {
 };
 </script>
 <style lang="stylus" scoped>
-.UIPagination
-  color: var(--text-secondary-color)
 .btn
   cursor: pointer
   -webkit-touch-callout: none; /* iOS Safari */

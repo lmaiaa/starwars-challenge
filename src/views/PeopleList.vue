@@ -13,7 +13,7 @@
         p.container__cards__card_text Mass: {{ person.mass }}
         p.container__cards__card_text Hair: {{ person.hair_color }}
         p.container__cards__card_text Gender: {{ person.gender }}
-        UIButton.container__cards__card__action(text="More Info")
+        UIButton.container__cards__card__action(text="More Info" @click="$router.push(`/people/${person.url.split('/')[5]}`)")
     div.container__cards--no-results(v-show="!loading && !paginatedAndFilteredPeopleList.length") No results
     UIPagination.container__pagination(
       :loadMore="loadMore",
@@ -59,7 +59,6 @@ export default {
     },
     wrapperSearchByName: async function () {
       this.SET_FILTERED_NAME(this.search);
-      console.log(this.moreInfo);
       if (this.moreInfo && this.search !== "")
         await this.fetchPeopleListByName(this.search);
     },
@@ -97,7 +96,6 @@ export default {
 
   .title
     margin: 10px;
-    color: var(--text-secondary-color)
 
 
   .container
@@ -118,7 +116,6 @@ export default {
       flex-wrap: wrap;
       &--no-results
         font-size: 1.5em;
-        color: var(--text-secondary-color)
 
       &__card
         margin: 5px;
