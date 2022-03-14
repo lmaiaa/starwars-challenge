@@ -20,21 +20,20 @@ export default {
   --background-color-primary: #ebebeb
   --background-color-secondary:#fafafa
   --accent-color: #cacaca
-  --text-primary-color: #222
-  --text-secondary-color: #ddd
+  --text-primary-color: #ddd
+  --text-secondary-color: #222
   --element-size: 4rem
-  --color-primary: #222
-  --color-secondary: #ddd
-  --background-color-card: #493F00
+  --color-primary: #fffbf0
+  --color-secondary:  #474843
+  --background-color-card: #ffd41f
   &.dark
     --background-color-primary: #1e1e1e
     --background-color-secondary: #2d2d30
     --accent-color: #3f3f3f
-    --text-primary-color: #ddd
-    --text-secondary-color: #222
-    --color-primary: #ddd
-    --color-secondary: #222
-    --background-color-card: #E6D675
+    --text-primary-color: #222
+    --text-secondary-color: #ddd
+    --color-primary: #474843
+    --color-secondary: #fffbf0
 body
 html
   background-color: var(--background-color-primary)
